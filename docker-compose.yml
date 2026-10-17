@@ -1,0 +1,42 @@
+# IncidentVault — Postgres 16 + Spring Boot API + React UI (nginx)
+# Note: cannot be executed on a machine without a Docker daemon; standard stack.
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: incidentvault
+      POSTGRES_PASSWORD: incidentvault
+      POSTGRES_DB: incidentvault
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U incidentvault -d incidentvault"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/incidentvault
+      DATABASE_USER: incidentvault
+      DATABASE_PASSWORD: incidentvault
+      # API_KEY: <unset> — set to require the X-API-Key header
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

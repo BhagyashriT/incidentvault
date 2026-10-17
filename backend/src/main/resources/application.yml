@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/incidentvault}
+    username: ${DATABASE_USER:incidentvault}
+    password: ${DATABASE_PASSWORD:incidentvault}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+# Placeholder API key auth. Empty (default) disables the check entirely.
+# Set via the API_KEY environment variable to require the X-API-Key header.
+incidentvault:
+  api-key: ${API_KEY:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

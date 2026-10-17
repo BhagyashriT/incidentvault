@@ -1,0 +1,17 @@
+// Claude Desktop MCP server configuration snippet.
+// Paste the inner "incidentvault" block into the "mcpServers" object of your
+// Claude Desktop config file, then RESTART Claude Desktop.
+//   macOS: ~/Library/Application Support/Claude/claude_desktop_config.json
+// NOTE: replace /ABSOLUTE/PATH/TO/server.py with the real absolute path to
+// this repo's mcp-server/server.py (see README for the install steps first).
+{
+  "mcpServers": {
+    "incidentvault": {
+      "command": "python3",
+      "args": ["/ABSOLUTE/PATH/TO/server.py"],
+      "env": {
+        "INCIDENTVAULT_API_URL": "http://localhost:8080"
+      }
+    }
+  }
+}
