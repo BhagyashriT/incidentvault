@@ -214,3 +214,16 @@ gh repo create incidentvault --public --source=. --push
 # git remote add origin git@github.com:<you>/incidentvault.git
 # git push -u origin main
 ```
+
+## Design trade-offs
+
+- **Postgres full-text search instead of Elasticsearch** — generated `tsvector` columns + GIN indexes give ranked search with zero extra infrastructure. The cost: no fuzzy typo-tolerance or synonyms out of the box; fine for incident titles and log excerpts, not for a docs-search product.
+- **MCP server over stdio, plain HTTP to the API** — the agent gets tools; the API stays a normal REST service any client can call. No agent-specific logic leaks into the backend.
+- **API-key placeholder, not full auth** — this is a portfolio system, not a multi-tenant product; a single key demonstrates the auth seam without building user management nobody asked for.
+- **Seed data via Flyway migrations** — every fresh deploy boots with 3 realistic incidents, 15 timeline events, and 2 runbooks, so the demo works on first load with no manual setup.
+
+## Known limitations
+
+- Search is keyword-based (tsvector); semantic/vector search would help "find incidents like this one" — a natural next step with `pgvector`.
+- Single API key; no per-user workspaces or audit log of who changed what.
+- 21 tests green (MockMvc web-layer + `@DataJpaTest` + unit). The real-Postgres tsvector path and `docker compose` need one smoke pass on a machine with Docker.
