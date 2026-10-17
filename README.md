@@ -199,22 +199,6 @@ the `DATABASE_*` trio.)
 * Delivered a React + TypeScript UI (Vite) with incident search/filter, vertical timeline visualization, RCA evidence view, and runbook viewer — deliberate design tokens, zero template residue.
 * Defined a 13-endpoint REST API contract up front (validation, consistent 404/400 error envelopes, API-key placeholder filter), letting backend, MCP, and frontend workstreams build in parallel against one contract.
 
-## Push to GitHub
-
-Manual step (the coordinator owns this — do not run from an agent session
-without credentials):
-
-```
-cd ~/workspace/incidentvault
-git init -b main
-git add -A
-git commit -m "Initial commit: IncidentVault MVP"
-gh repo create incidentvault --public --source=. --push
-# or, without gh: create the repo on github.com, then:
-# git remote add origin git@github.com:<you>/incidentvault.git
-# git push -u origin main
-```
-
 ## Design trade-offs
 
 - **Postgres full-text search instead of Elasticsearch** — generated `tsvector` columns + GIN indexes give ranked search with zero extra infrastructure. The cost: no fuzzy typo-tolerance or synonyms out of the box; fine for incident titles and log excerpts, not for a docs-search product.
@@ -227,3 +211,7 @@ gh repo create incidentvault --public --source=. --push
 - Search is keyword-based (tsvector); semantic/vector search would help "find incidents like this one" — a natural next step with `pgvector`.
 - Single API key; no per-user workspaces or audit log of who changed what.
 - 21 tests green (MockMvc web-layer + `@DataJpaTest` + unit). The real-Postgres tsvector path and `docker compose` need one smoke pass on a machine with Docker.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
