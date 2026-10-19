@@ -700,3 +700,86 @@ p {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Welcome page ---------- */
+
+.welcome-hero {
+  text-align: center;
+  padding: var(--space-12) var(--space-6) var(--space-8);
+}
+
+.welcome-mark {
+  display: inline-block;
+  font-size: 2.5rem;
+  color: var(--color-accent);
+  margin-bottom: var(--space-4);
+}
+
+.welcome-hero h1 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-3);
+}
+
+.welcome-tagline {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.welcome-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.welcome-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+}
+
+.welcome-card h2 {
+  font-size: var(--font-size-lg);
+}
+
+.welcome-card p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  flex: 1;
+}
+
+.welcome-card-icon {
+  font-size: 1.75rem;
+}
+
+.welcome-card-cta {
+  color: var(--color-accent);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.welcome-agent {
+  margin-top: var(--space-8);
+  padding: var(--space-6);
+  border-left: 3px solid var(--color-accent);
+}
+
+.welcome-agent h2 {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-2);
+}
+
+.welcome-agent p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.welcome-agent code {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text);
+}

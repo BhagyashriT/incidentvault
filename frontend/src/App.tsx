@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Nav } from "./components/Nav";
+import { Welcome } from "./pages/Welcome";
 import { IncidentsList } from "./pages/IncidentsList";
 import { NewIncident } from "./pages/NewIncident";
 import { IncidentDetail } from "./pages/IncidentDetail";
@@ -13,7 +14,8 @@ export function App() {
       <Nav />
       <main className="main">
         <Routes>
-          <Route path="/" element={<IncidentsList />} />
+          <Route path="/" element={<Welcome />} />
+          <Route path="/incidents" element={<IncidentsList />} />
           <Route path="/incidents/new" element={<NewIncident />} />
           <Route path="/incidents/:id" element={<IncidentDetail />} />
           <Route path="/runbooks" element={<RunbooksList />} />

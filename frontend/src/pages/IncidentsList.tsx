@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { api } from "../api/client";
 import type { Severity } from "../api/types";
 import { useApi } from "../hooks/useApi";
@@ -15,7 +15,8 @@ function formatDate(iso: string): string {
 }
 
 export function IncidentsList() {
-  const [q, setQ] = useState("");
+  const [searchParams] = useSearchParams();
+  const [q, setQ] = useState(searchParams.get("q") ?? "");
   const [severity, setSeverity] = useState<"" | Severity>("");
   const [service, setService] = useState("");
   const [status, setStatus] = useState("");

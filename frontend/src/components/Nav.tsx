@@ -9,7 +9,7 @@ export function Nav() {
         </Link>
         <nav className="nav-links" aria-label="Primary">
           <NavLink
-            to="/"
+            to="/incidents"
             end
             className={({ isActive }) =>
               `nav-link${isActive ? " active" : ""}`
