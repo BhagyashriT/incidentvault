@@ -8,6 +8,9 @@ a React UI gives engineers a searchable timeline view; a Python MCP server
 exposes the same knowledge base as tools so an AI agent (e.g. Claude) can
 pull validated troubleshooting steps mid-incident.
 
+**Live demo:** [incidentvault.vercel.app](https://incidentvault.vercel.app) ·
+API: [incidentvault-wjvp.onrender.com](https://incidentvault-wjvp.onrender.com)
+
 ## Architecture
 
 ```mermaid
