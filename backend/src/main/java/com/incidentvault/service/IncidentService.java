@@ -69,7 +69,11 @@ public class IncidentService {
                     service,
                     status == null ? null : status.name());
         } else {
-            found = incidents.searchPortable(normalized, severity, service, status);
+            // Build the LIKE pattern in Java: JPQL concat('%', :q, '%') with a null :q
+            // makes Postgres infer bytea and fail with "function lower(bytea) does not exist".
+            String pattern = normalized == null ? null : "%" + normalized.toLowerCase() + "%";
+            String serviceLower = service == null ? null : service.toLowerCase();
+            found = incidents.searchPortable(pattern, severity, serviceLower, status);
         }
         return found.stream().map(IncidentListItem::from).toList();
     }

@@ -33,19 +33,22 @@ public interface IncidentRepository extends JpaRepository<Incident, Long> {
 
     /**
      * Portable fallback (e.g. H2 in tests): case-insensitive LIKE over the same fields.
+     * The LIKE pattern is pre-built in Java (not via concat() in JPQL): Postgres cannot
+     * infer the type of concat('%', :q, '%') when :q is null and fails with
+     * "function lower(bytea) does not exist".
      */
     @Query("""
             SELECT i FROM Incident i
-            WHERE (:q IS NULL
-                   OR lower(i.title) LIKE lower(concat('%', :q, '%'))
-                   OR lower(i.summary) LIKE lower(concat('%', :q, '%'))
-                   OR lower(i.service) LIKE lower(concat('%', :q, '%')))
+            WHERE (:pattern IS NULL
+                   OR lower(i.title) LIKE :pattern
+                   OR lower(i.summary) LIKE :pattern
+                   OR lower(i.service) LIKE :pattern)
               AND (:severity IS NULL OR i.severity = :severity)
-              AND (:service IS NULL OR lower(i.service) = lower(:service))
+              AND (:service IS NULL OR lower(i.service) = :service)
               AND (:status IS NULL OR i.status = :status)
             ORDER BY i.createdAt DESC
             """)
-    List<Incident> searchPortable(@Param("q") String q,
+    List<Incident> searchPortable(@Param("pattern") String pattern,
                                   @Param("severity") Severity severity,
                                   @Param("service") String service,
                                   @Param("status") IncidentStatus status);
